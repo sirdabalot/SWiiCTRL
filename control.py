@@ -2,7 +2,7 @@ import time
 from pymouse import PyMouse
 import cwiid
 
-print( "Connect with the 1+2 buttons" )
+print( "Connect with the 1+2 buttons and wait." )
 
 wm = cwiid.Wiimote( )
 ms = PyMouse( )
@@ -26,6 +26,8 @@ def clms( btn ):
 	cx = ms.position( )[ 0 ]
 	cy = ms.position( )[ 1 ]
 	ms.click( cx, cy, btn )
+
+print( "You can use it now." )
 
 while True :
 	button = wm.state['buttons']
