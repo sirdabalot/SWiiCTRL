@@ -2,14 +2,19 @@ import time
 from pymouse import PyMouse
 import cwiid
 
-print( "Connect with the 1+2 buttons and wait." )
-
-wm = cwiid.Wiimote( )
 ms = PyMouse( )
-
 msens = 1
 
-time.sleep( 1 )
+print( "Connect with the 1+2 buttons and wait." )
+
+while True:
+	try:
+		wm = cwiid.Wiimote( )
+		time.sleep( 1 )
+	except RuntimeError:
+		print( "No wiimote found, trying again." )
+	else:
+		break
 
 wm.rumble = 1
 time.sleep( 0.2 )
@@ -31,6 +36,9 @@ print( "You can use it now." )
 
 while True :
 	button = wm.state['buttons']
+	
+	# Mouse Movement
+	
 	if button == 2048:
 		mvms( 0, -msens )
 	elif button == 1024:
@@ -39,8 +47,19 @@ while True :
 		mvms( -msens, 0 )
 	elif button == 512:
 		mvms( msens, 0 )
+		
+	# Mouse Clicks
+		
 	elif button == 4:
 		clms( 1 )
 	elif button == 8:
 		clms( 2 )
+		
+	# Mouse Sensitivity
+	
+	elif button == 4096:
+		msens += 1
+	elif button == 16:
+		if msens > 1:
+			msens -= 1
 		
